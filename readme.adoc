@@ -38,7 +38,7 @@ mkdir game/images/animation
 [source, python]
 ----
 init python:
-    def generate_animation(directory, fps = 30, looping = False):
+    def generate_animation(directory, fps = 30, looping = False, hold_last = False):
         from uuid import uuid4
         animation_parts = []
         pause = 1.0/fps
@@ -48,8 +48,11 @@ init python:
                     animation_parts.append(path)
                     animation_parts.append(pause)
         if not looping:
-            renpy.image("clear_solid_last_animation_frame", Solid("#ffffff00"))
-            animation_parts.append("clear_solid_last_animation_frame")
+            if not hold_last:
+                renpy.image("clear_solid_last_animation_frame", Solid("#ffffff00"))
+                animation_parts.append("clear_solid_last_animation_frame")
+            else:
+                animation_parts.pop()
         image_name = str(uuid4())
         renpy.image(image_name, Animation(*animation_parts))
         return image_name

@@ -1,5 +1,5 @@
 init python:
-    def generate_animation(directory, fps = 30, looping = False):
+    def generate_animation(directory, fps = 30, looping = False, hold_last = False):
         """
         Generates an animation from the png files in the given directory, in
         name order.  It is advised that, to keep the ordering of frames correct,
@@ -14,6 +14,9 @@ init python:
         fps (int): Frames per second for the animation.
 
         looping (bool): Whether or not the animation should loop.
+
+        hold_last (bool): Whether or not the animation should hold on the last
+        frame or vanish after completion.
 
         Returns:
         str: Name of the generated animation.
@@ -42,12 +45,19 @@ init python:
                     animation_parts.append(path)
                     # followed by the pause for that animation frame
                     animation_parts.append(pause)
-
+        
         # If we don't want the animation to loop
         if not looping:
-            # end the animation with a clear frame (with no following duration).
-            renpy.image("clear_solid_last_animation_frame", Solid("#ffffff00"))
-            animation_parts.append("clear_solid_last_animation_frame")
+            # And we don't want to hold on the last frame.
+            if not hold_last:
+                # end the animation with a clear frame (with no following duration).
+                renpy.image("clear_solid_last_animation_frame", Solid("#ffffff00"))
+                animation_parts.append("clear_solid_last_animation_frame")
+            # And we _do_ want to hold on the last frame
+            else:
+                # remove the last pause duration item from the animation_parts
+                # list to set the last frame to have no set pause duration
+                animation_parts.pop()
 
         # Generate a "random" value for the "name" of the animation. This should
         # not be referenced by human written code so the value doesn't actually
@@ -60,4 +70,4 @@ init python:
         # And return its name.
         return image_name
 
-image explosion = generate_animation("images/effects/explosion", 45)
+image explosion = generate_animation("images/effects/explosion", 45, False, False)
