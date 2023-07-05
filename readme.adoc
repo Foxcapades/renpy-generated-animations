@@ -23,6 +23,7 @@ mkdir game/images/animation
 
 . Name your animation frames with the same name with an incrementing number at
   the end:
++
 [source]
 ----
 ./frame01.png
