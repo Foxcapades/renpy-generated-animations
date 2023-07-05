@@ -2,6 +2,7 @@
 *.save
 *.rpyc
 *.rpyb
+*.rpym
 *.rpymc
 project.json
 log.txt
