@@ -3,8 +3,9 @@ init python:
         """
         Generates an animation from the png files in the given directory, in
         name order.  It is advised that, to keep the ordering of frames correct,
-        the files in the given directory are suffixed with an incrementing
-        integer.  For example: [ file01.png, file02.png, file03.png, ... ].
+        the files in the given directory have a common name suffixed with an
+        incrementing integer.  For example:
+        [ file01.png, file02.png, file03.png, ... ].
 
         Parameters:
         directory (str): The directory containing the animation frames.  This
