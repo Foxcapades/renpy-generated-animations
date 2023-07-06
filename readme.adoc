@@ -12,7 +12,7 @@ This method is originally inspired by
 link:https://www.reddit.com/r/RenPy/comments/vhgn1h/comment/id7frau/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button[this Reddit post]
 by Blue_Budgies.
 
-== Gimme the Code
+== Just Gimme It
 
 . Make a subdirectory to contain the animation frames:
 +
@@ -38,17 +38,27 @@ frame05.png
 [source, python]
 ----
 init python:
-    def generate_animation(directory, fps = 30, looping = False, hold_last = False):
+    def generate_animation(directory, **kwargs):
         from uuid import uuid4
+        if "fps" in kwargs:
+            if "pause" in kwargs:
+                raise Exception("cannot set both \"fps\" and \"pause\".")
+            else:
+                pause = 1.0 / float(kwargs["fps"])
+        elif "pause" in kwargs:
+            pause = float(kwargs["pause"])
+        else:
+            pause = 1.0 / 30
+        looping = bool(kwargs["looping"]) if "looping" in kwargs else False
+        hold_last_frame = bool(kwargs["hold_last_frame"]) if "hold_last_frame" in kwargs else False
         animation_parts = []
-        pause = 1.0/fps
         for path in renpy.list_files():
             if path.startswith(directory):
                 if path[path.rindex(".")+1:].lower() == "png":
                     animation_parts.append(path)
                     animation_parts.append(pause)
         if not looping:
-            if not hold_last:
+            if not hold_last_frame:
                 renpy.image("clear_solid_last_animation_frame", Solid("#ffffff00"))
                 animation_parts.append("clear_solid_last_animation_frame")
             else:
@@ -62,7 +72,7 @@ init python:
 +
 [source, renpy]
 ----
-image my_animation = generate_animation("images/animation")
+image my_animation = generate_animation("images/effects/explosion")
 ----
 
 == Functions
@@ -82,18 +92,30 @@ given directory are suffixed with an incrementing integer.  For example:
 | directory
 | str
 | The directory containing the animation frames.  This path is relative to the
-  root of the game project.  For example, a path may look like:
-  `"images/animations/explosion"`.
-
+  game directory.  For example, a path may look like:
+  "images/animations/explosion".
+|===
+--
++
+.Keyword Arguments
+--
+[cols="1m,1m,8"]
+|===
 | fps
-| int
-| Frames per second for the animation.  Defaults to `30`.
+| int\|float
+| Frames per second for the animation.  Incompatible with the `pause` keyword
+  argument; setting both will cause an error. Defaults to `30`.
+
+| pause
+| float
+| How long to pause between each frame.  Incompatible with the `fps` keyword
+  argument; setting both will cause an error.  Defaults to `None`.
 
 | looping
 | bool
 | Whether or not the animation should loop.  Defaults to `False`.
 
-| hold_last
+| hold_last_frame
 | bool
 | Whether or not the animation should hold on the last frame or vanish after
   completion.  Defaults to `False`.

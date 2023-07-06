@@ -7,6 +7,8 @@
 project.json
 
 game/saves/persistent
+game/saves/navigation.json
+game/cache/shaders.txt
 
 log.txt
 traceback.txt

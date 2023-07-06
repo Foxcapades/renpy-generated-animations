@@ -1,5 +1,5 @@
 init python:
-    def generate_animation(directory, fps = 30, looping = False, hold_last = False):
+    def generate_animation(directory, **kwargs):
         """
         Generates an animation from the png files in the given directory, in
         name order.  It is advised that, to keep the ordering of frames correct,
@@ -7,30 +7,61 @@ init python:
         incrementing integer.  For example:
         [ file01.png, file02.png, file03.png, ... ].
 
-        Parameters:
+        Arguments:
         directory (str): The directory containing the animation frames.  This
-        path is relative to the root of the game project.  For example, a path
-        may look like: "images/animations/explosion".
+        path is relative to the game directory.  For example, a path may look
+        like: "images/animations/explosion".
 
-        fps (int): Frames per second for the animation.
+        Keyword Arguments:
+        fps (int|float): Frames per second for the animation.  Incompatible with
+        the `pause` keyword argument.  Setting both will cause an error. 
+        Defaults to 30.
 
-        looping (bool): Whether or not the animation should loop.
+        pause (float): How long to pause between each frame.  Incompatible with
+        the `fps` keyword argument.  Setting both will cause an error.  Defaults
+        to None.
 
-        hold_last (bool): Whether or not the animation should hold on the last
-        frame or vanish after completion.
+        looping (bool): Whether or not the animation should loop.  Defaults to
+        False.
+
+        hold_last_frame (bool): Whether the animation should hold on the last
+        frame or vanish after completion.  Defaults to False.
 
         Returns:
         str: Name of the generated animation.
         """
         from uuid import uuid4
 
+        # If the caller set the "fps" keyword argument...
+        if "fps" in kwargs:
+            # and set the "pause" keyword argument...
+            if "pause" in kwargs:
+                # throw an error because that's invalid.
+                raise Exception("cannot set both \"fps\" and \"pause\".")
+            else:
+                # set the pause between frames to the value of 1 second divided
+                # by the target fps.
+                pause = 1.0 / float(kwargs["fps"])
+        # If the caller set the "pause" keyword argument...
+        elif "pause" in kwargs:
+            # Set the pause directly.
+            pause = float(kwargs["pause"])
+        # If the caller did not provide either an "fps" or "pause" keword
+        # argument...
+        else:
+            # Set the pause duration based on 30fps
+            pause = 1.0 / 30
+
+        # Whether the animation should loop.  Defaults to False.
+        looping = bool(kwargs["looping"]) if "looping" in kwargs else False
+
+        # Whether the animation should hold on the last frame.  Defaults to False.
+        hold_last_frame = bool(kwargs["hold_last_frame"]) if "hold_last_frame" in kwargs else False
+
         # List to hold the animation components.  This list contains non-tuple
         # pairs of images and pause durations.  For example:
         # [ image, pause, image, pause, image, pause ]
         animation_parts = []
-
-        # Divide 1 "second" by the target FPS to get the pause duration.
-        pause = 1.0/fps
 
         # Build the list of animation components.  This is done by iterating
         # through the files known to renpy and...
@@ -50,7 +81,7 @@ init python:
         # If we don't want the animation to loop
         if not looping:
             # And we don't want to hold on the last frame.
-            if not hold_last:
+            if not hold_last_frame:
                 # end the animation with a clear frame (with no following duration).
                 renpy.image("clear_solid_last_animation_frame", Solid("#ffffff00"))
                 animation_parts.append("clear_solid_last_animation_frame")
@@ -71,4 +102,4 @@ init python:
         # And return its name.
         return image_name
 
-image explosion = generate_animation("images/effects/explosion", 45, False, False)
+image explosion = generate_animation("images/effects/explosion", fps=45)
