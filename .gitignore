@@ -2,9 +2,12 @@
 *.save
 *.rpyc
 *.rpyb
-*.rpym
 *.rpymc
+
 project.json
-log.txt
+
 game/saves/persistent
 
+log.txt
+traceback.txt
+errors.txt

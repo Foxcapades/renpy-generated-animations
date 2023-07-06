@@ -65,6 +65,42 @@ init python:
 image my_animation = generate_animation("images/animation")
 ----
 
+== Functions
+
+`generate_animation`::
++
+Generates an animation from the png files in the given directory, in name order.
+It is advised that, to keep the ordering of frames correct, the files in the
+given directory are suffixed with an incrementing integer.  For example:
+`[ file01.png, file02.png, file03.png, ... ]`.
++
+.Arguments
+--
+[cols="1m,1m,8"]
+|===
+
+| directory
+| str
+| The directory containing the animation frames.  This path is relative to the
+  root of the game project.  For example, a path may look like:
+  `"images/animations/explosion"`.
+
+| fps
+| int
+| Frames per second for the animation.  Defaults to `30`.
+
+| looping
+| bool
+| Whether or not the animation should loop.  Defaults to `False`.
+
+| hold_last
+| bool
+| Whether or not the animation should hold on the last frame or vanish after
+  completion.  Defaults to `False`.
+|===
+--
+
+
 == Credits
 
 * Original inspiration: link:https://www.reddit.com/r/RenPy/comments/vhgn1h/comment/id7frau/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button[Blue_Budgies on Reddit]
@@ -72,5 +108,5 @@ image my_animation = generate_animation("images/animation")
 
 == License
 
-Published under the link:license[MIT License] which practically says, go nuts,
-use it however you want.
+Published under the link:license[MIT License] which practically says "go nuts,
+use it however you want."
