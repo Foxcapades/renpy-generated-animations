@@ -21,7 +21,7 @@ by Blue_Budgies.
 mkdir game/images/animation
 ----
 
-. Name your animation frames with the same name with an incrementing number at
+. Name your animation frames with a common name with an incrementing number at
   the end:
 +
 [source]
