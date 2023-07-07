@@ -12,7 +12,7 @@ This method is originally inspired by
 link:https://www.reddit.com/r/RenPy/comments/vhgn1h/comment/id7frau/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button[this Reddit post]
 by Blue_Budgies.
 
-== Just Gimme It
+== Quick Usage
 
 . Make a subdirectory to contain the animation frames:
 +
