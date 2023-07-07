@@ -1,5 +1,6 @@
 = Demo Generating Animations
 :source-highlighter: highlight.js
+:toc:
 
 
 This is a simple Ren'Py demonstration of automatically generating an animation
@@ -11,6 +12,48 @@ link:game/animations.rpy[animations.rpy].
 This method is originally inspired by 
 link:https://www.reddit.com/r/RenPy/comments/vhgn1h/comment/id7frau/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button[this Reddit post]
 by Blue_Budgies.
+
+== Why?
+
+If you have ever constructed animations by doing the following, you quickly
+realize how tedious it can be.
+
+[source, python]
+----
+image tacos:
+    "images/tacos/frame1"
+    pause 0.2
+    "images/tacos/frame2"
+    pause 0.2
+    "images/tacos/frame3"
+    pause 0.2
+    "images/tacos/frame4"
+    pause 0.2
+    "images/tacos/frame5"
+    pause 0.2
+    "images/tacos/frame6"
+    pause 0.2
+    repeat
+----
+
+While this approach is fine if you have few frames or few animations, if you
+have to construct an animation with many frames or a lot of animations, this
+quickly becomes a pain.
+
+Instead, for situations where the pause duration is the same between frames, we
+can replace that tedium with a simple function call:
+
+[source, python]
+----
+image tacos = generate_animation("images/tacos")
+----
+
+=== What about...?
+
+Animations with variable framerates::
+If your animation holds on some frames for longer than or shorter than others,
+this is not the solution for you.  This will set the pause duration on all
+frames to the value given (or the default of `30` frames per second).
 
 == Quick Usage
 
