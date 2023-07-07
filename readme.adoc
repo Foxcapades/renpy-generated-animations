@@ -45,7 +45,7 @@ can replace that tedium with a simple function call:
 
 [source, python]
 ----
-image tacos = generate_animation("images/tacos")
+image tacos = generate_animation("images/tacos", pause=0.2)
 ----
 
 === What about...?
