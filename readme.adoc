@@ -80,9 +80,48 @@ image my_animation = generate_animation("images/effects/explosion")
 `generate_animation`::
 +
 Generates an animation from the png files in the given directory, in name order.
++
 It is advised that, to keep the ordering of frames correct, the files in the
-given directory are suffixed with an incrementing integer.  For example:
-`[ file01.png, file02.png, file03.png, ... ]`.
+given directory are suffixed with an incrementing integer with one or more
+preceding zeros.  For example: `[ file01.png, file02.png, file03.png, ... ]`.
++
+.Notes on filename suffix leading zeros...
+[%collapsible]
+====
+The leading zeros are necessary due to the fact that sorting files by name will
+put `file10.png` _before_ `file2.png` as it will compare the `1` in `10` to the
+`2` and stop there.  However, with `file02.png` and `file10.png`, it will
+compare the `0` in `02` to the `1` in `10` and stop there, putting them in the
+correct relative order based on that.
+
+The number of preceding zeros necessary depends on the number of frames in your
+animation, and the zeros are only necessary for filenames with a lesser number
+of digits than the max digit count for the last frame.
+
+For example, if you have 10 frames, it would be advised that the numbers `0-9`
+be prefixed with a single leading zero so the total digit width of the suffix
+number is always 2.
+
+[source]
+----
+file01.png
+...
+file10.png
+----
+
+If you had 100-999 frames for your animation (whoa, nelly!) it would be advised
+that you put 2 leading zeros before the numbers `0-9` and 1 leading zero before
+the numbers `10-99` to keep the ordering correct.
+
+[source]
+----
+file001.png
+...
+file010.png
+...
+file245.png
+----
+====
 +
 .Arguments
 --
