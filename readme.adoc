@@ -56,12 +56,7 @@ frames to the value given (or the default of `30` frames per second).
 
 == Quick Usage
 
-. Make a subdirectory to contain the animation frames:
-+
-[source, shell]
-----
-mkdir game/images/animation
-----
+. Make a subdirectory to contain the animation frames.
 
 . Name your animation frames with a common name with an incrementing number at
   the end:
