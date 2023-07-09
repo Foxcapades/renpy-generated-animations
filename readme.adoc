@@ -1,4 +1,4 @@
-= Demo Generating Animations
+= Generate Animations from Frames
 :source-highlighter: highlight.js
 :toc:
 
