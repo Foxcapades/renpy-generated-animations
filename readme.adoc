@@ -2,11 +2,10 @@
 :source-highlighter: highlight.js
 :toc:
 
-
-This is a simple Ren'Py demonstration of automatically generating an animation
+The source code and a demonstration of automatically generating an animation
 based on png frames in a subdirectory of the game directory.
 
-The demo is playable, but the meat of the project is
+The demo is playable, but the meat of the project is the source code in
 link:game/animations.rpy[animations.rpy].
 
 This method is originally inspired by 
