@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Frame-Based Animation Generation</title>
+</head>
+
+<body>
+<!-- COPY FROM HERE UNTIL THE NEXT COMMENT -->
+
+<p>Generate animations from frame-sets with ease!</p>
+
+<p>
+  This tool is a helper function that makes it easy to generate animations of
+  any length from a folder full of frames.
+</p>
+
+<pre>
+image taco = generate_animation("images/taco")
+</pre>
+
+<h2>Why?</h2>
+<p>
+  If you have ever constructed animated images by doing the following, you
+  quickly realize how tedious it can be.
+</p>
+<pre>
+image tacos:
+    "images/tacos/frame1"
+    pause 0.2
+    "images/tacos/frame2"
+    pause 0.2
+    "images/tacos/frame3"
+    pause 0.2
+    "images/tacos/frame4"
+    pause 0.2
+    "images/tacos/frame5"
+    pause 0.2
+    "images/tacos/frame6"
+    pause 0.2
+    repeat
+</pre>
+<p>
+  While this approach is fine if you have few frames, or few animations, if you
+  have to construct an animation with many frames, of a lot of animations, this
+  quickly becomes a pain.
+</p>
+<p>
+  Instead, for situations where the pause duration between frames remains
+  constant, we can replace the above tedium with a simple function call.
+</p>
+<pre>
+image taco = generate_animation("images/taco", pause=0.2, looping=True)
+</pre>
+
+<h3>What about ...?</h3>
+<h4>Animations with variable framerates?</h4>
+<p>
+  If your animation hangs on some frames for longer or shorter than others, this
+  is not the solution for you.  This will set the pause duration on all frames
+  to the value given (or the default of <code>30</code>fps).
+</p>
+
+<h2>Usage</h2>
+<ol>
+  <li>Download the <a href="https://github.com/Foxcapades/renpy-generated-animations/releases/latest">latest release</a></li>
+  <li>Unzip it into your project directory (the directory above <code>game</code>)</li>
+  <li>Create a new directory inside your <code>game</code> directory to hold your animation frames</li>
+  <li>Ensure your frame images are named in such a way that they will be ordered correctly</li>
+  <li>Create your generated animation!</li>
+</ol>
+<p>
+  For additional usage information, see the <a href="https://github.com/Foxcapades/renpy-generated-animations">ReadMe on GitHub</a>
+</p>
+
+<h2>Credits</h2>
+<ul>
+  <li>Explosion frames from <a href="https://www.pngegg.com/en/png-nvowz">pngegg.com</a></li>
+</ul>
+
+<h2>License</h2>
+<p>
+  This source code and project are released under the MIT license, which to
+  paraphrase in a way that is not legally binding:
+</p>
+<ul>
+  <li>You can use it for free things</li>
+  <li>You can use it for paid things</li>
+  <li>You can modify it however you see fit</li>
+  <li>You can redistribute it as you see fit</li>
+  <li>Go nuts!</li>
+</ul>
+<p>
+  For a better breakdown of what the license actually means, see:
+  <a href="https://choosealicense.com/licenses/mit/">choosealicense.com</a>
+</p>
+<p>
+  I do ask that you credit me in some way, but if you don't I'm not gonna call
+  the open-source police on you. If you do choose to credit me you can do so by
+  providing a link to my
+  <a href="https://github.com/Foxcapades">GitHub</a>, my
+  <a href="https://foxcapades.itch.io/">Itch.io</a>, or just call me Foxcapades.
+</p>
+
+<!-- COPY ABOVE HERE FROM THE PREVIOUS COMMENT -->
+</body>
+</html>
