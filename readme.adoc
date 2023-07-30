@@ -8,9 +8,6 @@ based on png frames in a subdirectory of the game directory.
 The demo is playable, but the meat of the project is the source code in
 link:game/animations.rpy[animations.rpy].
 
-This method is originally inspired by 
-link:https://www.reddit.com/r/RenPy/comments/vhgn1h/comment/id7frau/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button[this Reddit post]
-by Blue_Budgies.
 
 == Why?
 
@@ -47,12 +44,14 @@ can replace that tedium with a simple function call:
 image tacos = generate_animation("images/tacos", pause=0.2, looping=True)
 ----
 
+
 === What about...?
 
 Animations with variable framerates::
 If your animation holds on some frames for longer than or shorter than others,
 this is not the solution for you.  This will set the pause duration on all
 frames to the value given (or the default of `30` frames per second).
+
 
 == Quick Usage
 
@@ -120,7 +119,8 @@ Generates an animation from the png files in the given directory, in name order.
 +
 It is advised that, to keep the ordering of frames correct, the files in the
 given directory are suffixed with an incrementing integer with one or more
-preceding zeros.  For example: `[ file01.png, file02.png, file03.png, ... ]`.
+preceding zeros.  For example: `[ file01.png, file02.png, file03.png, ... ]` or
+`[ 01.png, 02.png, 03.png, ... ]`.
 +
 .Notes on filename suffix leading zeros...
 [%collapsible]
@@ -203,6 +203,7 @@ file245.png
 
 * Original inspiration: link:https://www.reddit.com/r/RenPy/comments/vhgn1h/comment/id7frau/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button[Blue_Budgies on Reddit]
 * Explosion frames: https://www.pngegg.com/en/png-nvowz
+
 
 == License
 
