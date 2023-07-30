@@ -5,10 +5,6 @@
 The source code and a demonstration of automatically generating an animation
 based on png frames in a subdirectory of the game directory.
 
-The demo is playable, but the meat of the project is the source code in
-link:game/animations.rpy[animations.rpy].
-
-
 == Why?
 
 If you have ever constructed animations by doing the following, you quickly
@@ -44,6 +40,9 @@ can replace that tedium with a simple function call:
 image tacos = generate_animation("images/tacos", pause=0.2, looping=True)
 ----
 
+In the provided demonstration, we create an animation out of a 48 frame
+explosion, which would be really hecking tedious to do manually.
+
 
 === What about...?
 
@@ -53,63 +52,21 @@ this is not the solution for you.  This will set the pause duration on all
 frames to the value given (or the default of `30` frames per second).
 
 
-== Quick Usage
+== Usage
 
-. Make a subdirectory to contain the animation frames.
-
-. Name your animation frames with a common name with an incrementing number at
-  the end:
-+
-[source]
-----
-frame01.png
-frame02.png
-frame03.png
-frame04.png
-frame05.png
-----
-
-. Put this in your code somewhere:
+. Download the link:https://github.com/Foxcapades/renpy-generated-animation-demo/releases/latest[latest release].
+. Unzip it into your project directory (the directory above `game`).
+. Create a new directory inside your `game` directory to contain your animation
+frames.
+. Ensure your frames are named with an incrementing number (with an optional
+common prefix or a suffix).
+. Create your generated animation!
 +
 [source, python]
 ----
-init python:
-    def generate_animation(directory, **kwargs):
-        from uuid import uuid4
-        if "fps" in kwargs:
-            if "pause" in kwargs:
-                raise Exception("cannot set both \"fps\" and \"pause\".")
-            else:
-                pause = 1.0 / float(kwargs["fps"])
-        elif "pause" in kwargs:
-            pause = float(kwargs["pause"])
-        else:
-            pause = 1.0 / 30
-        looping = bool(kwargs["looping"]) if "looping" in kwargs else False
-        hold_last_frame = bool(kwargs["hold_last_frame"]) if "hold_last_frame" in kwargs else False
-        animation_parts = []
-        for path in renpy.list_files():
-            if path.startswith(directory):
-                if path[path.rindex(".")+1:].lower() == "png":
-                    animation_parts.append(path)
-                    animation_parts.append(pause)
-        if not looping:
-            if not hold_last_frame:
-                renpy.image("clear_solid_last_animation_frame", Solid("#ffffff00"))
-                animation_parts.append("clear_solid_last_animation_frame")
-            else:
-                animation_parts.pop()
-        image_name = str(uuid4())
-        renpy.image(image_name, Animation(*animation_parts))
-        return image_name
+image explosion = generate_animation("images/explosion", fps=45)
 ----
 
-. Now you can generate an animation!
-+
-[source, renpy]
-----
-image my_animation = generate_animation("images/effects/explosion")
-----
 
 == Functions
 
@@ -122,6 +79,7 @@ given directory are suffixed with an incrementing integer with one or more
 preceding zeros.  For example: `[ file01.png, file02.png, file03.png, ... ]` or
 `[ 01.png, 02.png, 03.png, ... ]`.
 +
+
 .Notes on filename suffix leading zeros...
 [%collapsible]
 ====
@@ -180,21 +138,29 @@ file245.png
 | fps
 | int\|float
 | Frames per second for the animation.  Incompatible with the `pause` keyword
-  argument; setting both will cause an error. Defaults to `30`.
+argument; setting both will cause an error.
+
+Defaults to `30`.
 
 | pause
 | float
 | How long to pause between each frame.  Incompatible with the `fps` keyword
-  argument; setting both will cause an error.  Defaults to `None`.
+argument; setting both will cause an error.
+
+Defaults to `None`.
 
 | looping
 | bool
-| Whether or not the animation should loop.  Defaults to `False`.
+| Whether or not the animation should loop.
+
+Defaults to `False`.
 
 | hold_last_frame
 | bool
 | Whether or not the animation should hold on the last frame or vanish after
-  completion.  Defaults to `False`.
+completion.
+
+Defaults to `False`.
 |===
 --
 
@@ -207,5 +173,19 @@ file245.png
 
 == License
 
-Published under the link:license[MIT License] which practically says "go nuts,
-use it however you want."
+This source code and project are released under the MIT license, which to
+paraphrase in a way that is not legally binding:
+
+* You can use it for free things
+* You can use it for paid things
+* You can modify it however you see fit
+* You can redistribute it as you see fit
+* Go nuts!
+
+For a better breakdown of what the license actually means see:
+https://choosealicense.com/licenses/mit/
+
+I do ask that you credit me in some way, but if you don't I'm not gonna call the
+open-source police on you.  If you do choose to credit me you can do so by
+providing a link to my link:https://github.com/Foxcapades[GitHub], my
+link:https://foxcapades.itch.io/[Itch.io], or just call me Foxcapades.
