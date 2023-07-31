@@ -1,8 +1,8 @@
 VERSION := $(shell grep 'define config.version' game/options.rpy | sed 's/.\+"\(.\+\)"/\1/')
 FEATURE := $(shell grep 'define config.version' game/options.rpy | sed 's/.\+"\(.\+\)"/\1/;s/\([0-9]\+\.[0-9]\+\).\+/\1.0/')
 
-SLIM_ZIP_NAME := releases/ga-slim-$(VERSION).zip
-FULL_ZIP_NAME := releases/ga-project-$(VERSION).zip
+SLIM_ZIP_NAME := .build/ga-slim-$(VERSION).zip
+FULL_ZIP_NAME := .build/ga-project-$(VERSION).zip
 
 .PHONY: default
 default:
@@ -21,12 +21,12 @@ release: pre-release build-base-project-zip build-slim-zip # build-distributions
 
 .PHONY: pre-release
 pre-release: clean
-	@rm -rf releases
+	@rm -rf .build log.txt errors.txt traceback.txt
 
 
 .PHONY: build-base-project-zip
 build-base-project-zip: clean
-	@mkdir -p releases
+	@mkdir -p .build
 	@rm -f "$(FULL_ZIP_NAME)"
 	@cp license generated-animations-license
 	@zip -r "$(FULL_ZIP_NAME)" game generated-animations-license -x game/saves/**\* -x game/cache/**\*
@@ -35,7 +35,7 @@ build-base-project-zip: clean
 
 .PHONY: build-slim-zip
 build-slim-zip: clean
-	@mkdir -p releases
+	@mkdir -p .build
 	@rm -f "$(SLIM_ZIP_NAME)"
 	@cp license generated-animations-license
 	@zip -r "$(SLIM_ZIP_NAME)" game/lib/fxcpds/generated_animations generated-animations-license
@@ -44,10 +44,10 @@ build-slim-zip: clean
 
 .PHONY: build-distributions
 build-distributions: clean
-	@mkdir -p releases
-	@renpy-8.1.1 /opt/renpy/8.1.1/launcher distribute . --package=pc --dest=releases
-	@renpy-8.1.1 /opt/renpy/8.1.1/launcher distribute . --package=mac --dest=releases
-	@renpy-8.1.1 /opt/renpy/8.1.1/launcher distribute . --package=linux --dest=releases
+	@mkdir -p .build
+	@renpy-8.1.1 /opt/renpy/8.1.1/launcher distribute . --package=pc --dest=.build
+	@renpy-8.1.1 /opt/renpy/8.1.1/launcher distribute . --package=mac --dest=.build
+	@renpy-8.1.1 /opt/renpy/8.1.1/launcher distribute . --package=linux --dest=.build
 
 
 .PHONY: docs
